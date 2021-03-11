@@ -46,14 +46,15 @@ module DatetimeCustomFieldQueryPatch
     if is_custom_filter
       # Custom field values are stored as strings in the DB
       # using this format that does not depend on DB date representation
-      if Rails.env.test?
-        # UPSTREAM version
-        time.strftime("%Y-%m-%d %H:%M:%S")
-      else
-        ########################
-        # Plugin : Custom format
-        time.strftime("%d/%m/%Y %H:%M")
-      end
+      time.strftime("%Y-%m-%d %H:%M:%S")
+      # if Rails.env.test?
+        # # UPSTREAM version
+        # time.strftime("%Y-%m-%d %H:%M:%S")
+      # else
+        # ########################
+        # # Plugin : Custom format
+        # time.strftime("%d/%m/%Y %H:%M")
+      # end
     else
       self.class.connection.quoted_date(time)
     end
