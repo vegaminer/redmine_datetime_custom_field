@@ -78,7 +78,7 @@ module DatetimeCustomFieldQueryPatch
       ###############
       ### Patch Start
       # Fix comparison for PostgreSQL
-      if is_custom_filter && self.class.connection.kind_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) && !Rails.env.test?
+      if is_custom_filter && ActiveRecord::ConnectionAdapters.const_defined?(:PostgreSQLAdapter) && self.class.connection.kind_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) && !Rails.env.test?
         s << ("to_timestamp(#{table}.#{field},'DD/MM/YYYY HH24:MI') > to_timestamp('%s','DD/MM/YYYY HH24:MI')" % [quoted_time(from, is_custom_filter)])
       else
         # Upstream version
@@ -98,7 +98,7 @@ module DatetimeCustomFieldQueryPatch
       ###############
       ### Patch Start
       # Fix comparison for PostgreSQL
-      if is_custom_filter && self.class.connection.kind_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) && !Rails.env.test?
+      if is_custom_filter && ActiveRecord::ConnectionAdapters.const_defined?(:PostgreSQLAdapter) && self.class.connection.kind_of?(ActiveRecord::ConnectionAdapters::PostgreSQLAdapter) && !Rails.env.test?
         s << ("to_timestamp(#{table}.#{field},'DD/MM/YYYY HH24:MI') <= to_timestamp('%s','DD/MM/YYYY HH24:MI')" % [quoted_time(to, is_custom_filter)])
       else
         # Upstream version
